@@ -23,9 +23,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return redirect("/login");
-// });
+Route::get('/', function () {
+    return redirect("/login");
+});
 
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
@@ -33,9 +33,9 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [LoginController::class, 'register'])->name('register');
 Route::post('/register', [LoginController::class, 'registerStore'])->name('login.register');
 
-Route::get('/', 'App\Http\Controllers\PusherController@index')->name('pusher');
-Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast')->name('broadcast');
-Route::post('/receive', 'App\Http\Controllers\PusherController@receive')->name('receive');
+// Route::get('/', 'App\Http\Controllers\PusherController@index')->name('pusher');
+// Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast')->name('broadcast');
+// Route::post('/receive', 'App\Http\Controllers\PusherController@receive')->name('receive');
 
 
 
@@ -48,6 +48,14 @@ Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::resource('subjects', SubjectController::class);
     Route::resource('events', EventController::class);
 
+    Route::post('/subjects/{subject}/add-student', [SubjectController::class, 'addStudent'])->name('subjects.add-student');
+    Route::post('/subjects/{subject}/add-topic', [SubjectController::class, 'addSubjectTopic'])->name('subjects.add-topic');
+    Route::post('/subjects/{subject}/add-exam', [SubjectController::class, 'addExam'])->name('subjects.add-exam');
+    Route::post('/subjects/{subject}/{exam}/{question}/save-question', [SubjectController::class, 'saveQuestion'])->name('subjects.save-question');
+    Route::get('subjects/{subject}/{exam}/{question}/edit-question', [SubjectController::class, 'viewEditQuestion'])->name('subjects.edit-question');
+    Route::get('subjects/{subject}/create-exam', [SubjectController::class, 'createExam'])->name('subjects.create-exam');
+    Route::get('subjects/{subject}/show-all', [SubjectController::class, 'showAllTopics'])->name('subjects.show-all-topics');
+    Route::get('subjects/{subject}/{exam}/show-exam', [SubjectController::class, 'showExam'])->name('subjects.show-exam');
     Route::get('/contacts/{contact}/activate', [ContactController::class, 'activate'])->name('contacts.activate');
     Route::get('/contacts/{contact}/deactivate', [ContactController::class, 'deactivate'])->name('contacts.deactivate');
 

@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Choice;
+use App\Models\Contact;
+use App\Models\Exam;
+use App\Models\Question;
 use App\Models\Section;
 use App\Models\Subject;
+use App\Models\SubjectStudent;
+use App\Models\SubjectTopic;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller
@@ -61,7 +67,8 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        return view('subject.show', compact('subject'));
+        $contacts = Contact::where('is_student', true)->get();
+        return view('subject.show', compact('subject' , 'contacts'));
     }
 
     /**
@@ -101,5 +108,106 @@ class SubjectController extends Controller
 
         if(auth()->user()->contact->is_admin)
             $this->createLog('Subject deleted', auth()->user(), true);
+    }
+
+    public function addStudent(Request $request, Subject $subject)
+    {
+        SubjectStudent::create([
+            'subject_id' => $subject->id,
+            'contact_id' => $request->contact_id,
+        ]);
+
+        return redirect()->route('subjects.show', $subject)->with('success', 'Student added to subject successfully.');
+    }
+
+    public function addSubjectTopic(Request $request, Subject $subject)
+    {
+        $data = $request->all();
+        if($request->hasFile('video_src')){
+
+            $data['video_src'] = $this->uploadFile($request, 'video_src', 'videos');
+        } else if($request->hasFile('file_src')){
+            $data['file_src'] = $this->uploadFile($request, 'file_src', 'files');
+        }
+
+        $data['subject_id'] = $subject->id;
+
+        SubjectTopic::create($data);
+
+        return redirect()->route('subjects.show', $subject)->with('success', 'Topic added to subject successfully.');
+    }
+
+    public function showAllTopics(Subject $subject)
+    {
+        $topics = SubjectTopic::where('subject_id', $subject->id)->get();
+        return view('subject.show-all', compact('subject', 'topics'));
+    }
+
+    public function createExam(Subject $subject)
+    {
+        return view('subject.create-exam', compact('subject'));
+    }
+
+    public function viewEditQuestion(Subject $subject, Exam $exam, Question $question)
+    {
+        // dd($exam->name);
+        return view('subject.edit-question', compact('subject', 'exam', 'question'));
+    }
+
+    public function saveQuestion(Request $request, Subject $subject, Exam $exam, Question $question)
+    {
+        $choices = $request->choice;
+        $correct = $request->is_correct;
+        // dd($exam->id);
+        $question->update([
+            'question' => $request->question,
+            'answer' => $request->answer,
+            'type' => $request->type,
+        ]);
+
+        for($i = 0; $i < count($choices); $i++) {
+            Choice::create([
+                'name' => $choices[$i],
+                'is_correct' => $correct[$i] == "0" ? false : true,
+                'question_id' => $question->id,
+            ]);
+        }
+
+        return redirect()->route('subjects.show-exam', [$subject, $exam])->with('success', 'Question updated successfully.');
+    }
+
+
+
+    public function addExam(Request $request, Subject $subject)
+    {
+        $data = $request->all();
+        $data['subject_id'] = $subject->id;
+
+        $topic = SubjectTopic::create($data);
+
+        $exam = Exam::create([
+            'subject_topic_id' => $topic->id,
+            'percentage' => $request->percentage,
+        ]);
+
+
+        $number_of_questions = $request->number_of_question;
+
+        for($i = 0; $i < $number_of_questions; $i++) {
+            Question::create([
+                'question' => 'N/A',
+                'answer' => 'N/A',
+                'exam_id' => $exam->id,
+                'type' => 'N/A',
+            ]);
+        }
+
+        return redirect()->route('subjects.show', $subject)->with('success', 'Exam added to subject successfully.');
+    }
+
+    public function showExam(Subject $subject, Exam $exam)
+    {
+        $questions = Question::where('exam_id', $exam->id)->get();
+        return view('subject.show-exam', compact('subject', 'exam', 'questions'));
     }
 }

@@ -9,13 +9,11 @@
 @include('includes.alert-success')
 
 <div class="nk-block nk-block-lg">
-    <div class="alert alert-fill alert-warning alert-dismissible alert-icon">
-        <em class="icon ni ni-cross-circle"></em> <strong>Warning</strong>!
-        Some features are not yet implemented due to some coding issues.
-        <button class="close" data-bs-dismiss="alert"></button>
-    </div>
+
     @include('includes.title', ['title' => 'Subjects', 'subtitle' => 'You have ' . count($subjects), 'subtitleCode' => 'Records '])
+    @if (!auth()->user()->contact->is_student)
     <a href="{{ route('subjects.create') }}" class="btn btn-primary mb-2"><em class="icon ni ni-plus"></em><span>Add Subject</span></a>
+    @endif
     <div class="card card-bordered card-preview">
         <div class="card-inner">
             <table class="datatable-init nk-tb-list nk-tb-ulist" data-auto-responsive="false">
@@ -54,8 +52,10 @@
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">
                                                     <li><a href="{{ route('subjects.show', ['subject' => $subject]) }}"><em class="icon ni ni-eye"></em><span>View</span></a></li>
+                                                    @if (!auth()->user()->contact->is_student)
                                                     <li><a href="{{ route('subjects.edit', ['subject' => $subject]) }}"><em class="icon ni ni-pen"></em><span>Edit</span></a></li>
                                                     <li><a href="javascript:void(0);" onclick="deleteData({{ $subject->id }})"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
+                                                    @endif
                                                 </ul>
                                             </div>
                                         </div>

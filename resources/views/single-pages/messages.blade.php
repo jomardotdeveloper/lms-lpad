@@ -5,9 +5,9 @@
 <div class="mt-5"></div>
 <div class="mt-5"></div>
 <div class="mt-5"></div>
-<div class="alert alert-fill alert-warning alert-dismissible alert-icon">
-    <em class="icon ni ni-cross-circle"></em> <strong>Warning</strong>!
-    This feature was disabled for some issues.
+<div class="alert alert-fill alert-danger alert-dismissible alert-icon">
+    <em class="icon ni ni-cross-circle"></em> <strong>Terminated</strong>!
+    Illuminate\Broadcasting\BroadcastException: Pusher error: The data content of this event exceeds the allowed maximum (10240 bytes).
     <button class="close" data-bs-dismiss="alert"></button>
 </div>
 {{-- <div class="nk-wrap ">

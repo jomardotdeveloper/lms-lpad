@@ -10,7 +10,10 @@
 
 <div class="nk-block nk-block-lg">
     @include('includes.title', ['title' => 'Classes', 'subtitle' => 'You have ' . count($sections), 'subtitleCode' => 'Records '])
+    @if (!auth()->user()->contact->is_student)
     <a href="{{ route('sections.create') }}" class="btn btn-primary mb-2"><em class="icon ni ni-plus"></em><span>Add Class</span></a>
+    @endif
+
     <div class="card card-bordered card-preview">
         <div class="card-inner">
             <table class="datatable-init nk-tb-list nk-tb-ulist" data-auto-responsive="false">
@@ -40,8 +43,10 @@
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">
                                                     <li><a href="{{ route('sections.show', ['section' => $section]) }}"><em class="icon ni ni-eye"></em><span>View</span></a></li>
+                                                    @if (!auth()->user()->contact->is_student)
                                                     <li><a href="{{ route('sections.edit', ['section' => $section]) }}"><em class="icon ni ni-pen"></em><span>Edit</span></a></li>
                                                     <li><a href="javascript:void(0);" onclick="deleteData({{ $section->id }})"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
+                                                    @endif
                                                 </ul>
                                             </div>
                                         </div>

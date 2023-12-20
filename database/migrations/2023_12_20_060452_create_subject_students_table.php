@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exams', function (Blueprint $table) {
+        Schema::create('subject_students', function (Blueprint $table) {
             $table->id();
-            $table->string('percentage');
-            $table->foreignId('subject_topic_id')->constrained('subject_topics')->onDelete('cascade');
-            // $table->boolean('is_taken_once')->default(false);
-            // $table->boolean('is_ready')->default(false);
+            $table->foreignId('subject_id')->constrained()->onDelete('cascade');
+            $table->foreignId('contact_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exams');
+        Schema::dropIfExists('subject_students');
     }
 };

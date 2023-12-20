@@ -10,12 +10,18 @@ class Exam extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        // 'name',
+        'percentage',
         'subject_topic_id',
     ];
 
     public function subjectTopic()
     {
         return $this->belongsTo(SubjectTopic::class);
+    }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
     }
 }

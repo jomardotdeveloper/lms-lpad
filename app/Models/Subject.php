@@ -28,4 +28,14 @@ class Subject extends Model
     {
         return $this->belongsTo(Section::class);
     }
+
+    public function subjectTopics()
+    {
+        return $this->hasMany(SubjectTopic::class);
+    }
+
+    public function subjectStudents()
+    {
+        return $this->hasMany(SubjectStudent::class);
+    }
 }
