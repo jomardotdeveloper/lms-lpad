@@ -234,7 +234,7 @@
                                             <input type="password" class="form-control form-control-lg" id="password" placeholder="Enter your password" required name="password_confirmation">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <div class="form-label-group">
                                             <label class="form-label" for="default-01">Department</label>
                                         </div>
@@ -245,7 +245,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="form-group">
                                         <div class="form-label-group">

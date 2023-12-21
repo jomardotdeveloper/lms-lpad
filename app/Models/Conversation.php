@@ -25,6 +25,29 @@ class Conversation extends Model
     {
         return $this->belongsTo(User::class, 'receiver_id');
     }
+    // get user not equal to the current user
+    public function getUserNotEqualAttribute()
+    {
+        if (auth()->user()->id == $this->sender_id) {
+            return $this->receiver;
+        }
+        return $this->sender;
+    }
+
+    public function getLastMessageAttribute()
+    {
+        $last = $this->chats()->latest()->first();
+
+        if ($last) {
+            if ($last->user_id == auth()->user()->id) {
+                return "You: " . $last->message;
+            } else {
+                return "{$last->user->contact->first_name}: {$last->message}";
+            }
+        } else {
+            return "No messages yet.";
+        }
+    }
 
     public function chats()
     {

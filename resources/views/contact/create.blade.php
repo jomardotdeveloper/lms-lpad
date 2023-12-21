@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     @if (isset($_GET['is_teacher']))
-                    <div class="col-sm-6">
+                    {{-- <div class="col-sm-6">
                         <div class="form-group">
                             <label class="form-label" for="department_id">Department</label>
                             <div class="form-control-wrap">
@@ -79,7 +79,7 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     @elseif(isset($_GET['is_student']))
                     <div class="col-sm-6">
                         <div class="form-group">

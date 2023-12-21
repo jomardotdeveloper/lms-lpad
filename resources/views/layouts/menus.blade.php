@@ -18,12 +18,12 @@
                         <span class="nk-menu-text">School Years</span>
                     </a>
                 </li>
-                <li class="nk-menu-item">
+                {{-- <li class="nk-menu-item">
                     <a href="{{ route('departments.index') }}" class="nk-menu-link">
                         <span class="nk-menu-icon"><em class="icon ni ni-building-fill"></em></span>
                         <span class="nk-menu-text">Departments</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nk-menu-item">
                     <a href="{{ route('events.index') }}" class="nk-menu-link">
                         <span class="nk-menu-icon"><em class="icon ni ni-calendar-fill"></em></span>

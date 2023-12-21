@@ -47,4 +47,11 @@ class User extends Authenticatable
     {
       return $this->hasOne(Contact::class);
     }
+
+    public function getConversationsAttribute()
+    {
+        return Conversation::where('sender_id', $this->id)
+            ->orWhere('receiver_id', $this->id)
+            ->get();
+    }
 }

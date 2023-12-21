@@ -60,6 +60,8 @@ Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::get('/contacts/{contact}/deactivate', [ContactController::class, 'deactivate'])->name('contacts.deactivate');
 
     Route::get('/messages' , [MessageController::class, 'index'])->name('messages.index');
+    Route::post('/messages' , [MessageController::class, 'storeConversation'])->name('messages.storeConversation');
+    Route::post('/messages/chat' , [MessageController::class, 'storeChat'])->name('messages.storeChat');
 
     Route::get('/logs/admin', [LogController::class, 'adminLogs'])->name('logs.admin');
     Route::get('/logs/user', [LogController::class, 'userLogs'])->name('logs.user');

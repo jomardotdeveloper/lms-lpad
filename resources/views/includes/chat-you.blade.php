@@ -1,13 +1,20 @@
 <div class="chat is-you">
     <div class="chat-avatar">
         <div class="user-avatar bg-purple">
-            <span>IH</span>
+            @if ($chat->user->contact->profile_picture)
+                <img src="{{ $chat->user->contact->profile_picture }}" alt="{{ $chat->user->contact->full_name }}">
+            @else
+                <span>{{ strtoupper($chat->user->contact->two_letters) }}</span>
+
+
+            @endif
+            {{-- <span>IH</span> --}}
         </div>
     </div>
     <div class="chat-content">
         <div class="chat-bubbles">
             <div class="chat-bubble">
-                <div class="chat-msg"> Hello! </div>
+                <div class="chat-msg"> {{ $chat->message }} </div>
                 <ul class="chat-msg-more">
                     <li>
                         <div class="dropdown">
@@ -23,8 +30,8 @@
             </div>
         </div>
         <ul class="chat-meta">
-            <li>Iliash Hossain</li>
-            <li>18 Dec, 2023 4:12 PM</li>
+            <li>{{ $chat->user->contact->full_name }}</li>
+            <li>{{ $chat->user->created_at }}</li>
         </ul>
     </div>
 </div>

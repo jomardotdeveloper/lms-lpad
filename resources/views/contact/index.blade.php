@@ -29,7 +29,7 @@
                     <tr class="nk-tb-item nk-tb-head">
                         <th class="nk-tb-col"><span class="sub-text">User</span></th>
                         @if (isset($_GET['is_teacher']))
-                        <th class="nk-tb-col tb-col-md"><span class="sub-text">Department</span></th>
+                        {{-- <th class="nk-tb-col tb-col-md"><span class="sub-text">Department</span></th> --}}
                         @elseif (isset($_GET['is_student']))
                         <th class="nk-tb-col tb-col-md"><span class="sub-text">Class</span></th>
                         @endif
@@ -67,9 +67,9 @@
                                 </div>
                             </td>
                             @if (isset($_GET['is_teacher']))
-                                <td class="nk-tb-col tb-col-mb" data-order="35040.34">
+                                {{-- <td class="nk-tb-col tb-col-mb" data-order="35040.34">
                                     {{ $contact->department->name }}
-                                </td>
+                                </td> --}}
                             @elseif (isset($_GET['is_student']))
                                 <td class="nk-tb-col tb-col-mb" data-order="35040.34">
                                     {{ $contact->section->name }}
