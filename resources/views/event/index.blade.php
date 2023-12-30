@@ -10,7 +10,10 @@
 
 <div class="nk-block nk-block-lg">
     @include('includes.title', ['title' => 'Event', 'subtitle' => 'You have ' . count($events), 'subtitleCode' => 'Records '])
+    @if (auth()->user()->contact->is_admin)
     <a href="{{ route('events.create') }}" class="btn btn-primary mb-2"><em class="icon ni ni-plus"></em><span>Add Event</span></a>
+    @endif
+
     <div class="nk-content-inner">
         <div class="nk-content-body">
             <div class="nk-block">

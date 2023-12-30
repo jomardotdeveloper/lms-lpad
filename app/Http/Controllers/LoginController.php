@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Validation\Rules\Password;
 class LoginController extends Controller
 {
     public function login(){
@@ -45,6 +46,19 @@ class LoginController extends Controller
             }else{
                 $this->createLog('User logged in', $user, false);
             }
+
+            if($user->contact->is_admin) {
+                return redirect()->intended("/admin/school-years");
+            }
+
+            if ($user->contact->is_student) {
+                return redirect()->intended("/admin/classrooms");
+            }
+
+            if ($user->contact->is_teacher) {
+                return redirect()->intended("/admin/classrooms");
+            }
+
             $request->session()->regenerate();
             return redirect()->intended("/admin/dashboard");
         }
@@ -61,7 +75,16 @@ class LoginController extends Controller
         $request->validate([
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|confirmed',
+            'password' => [
+                'required',
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised()
+            ],
+            'password_confirmation' => 'required|same:password'
         ]);
         $data = $request->all();
         $data['password'] = Hash::make($data['password']);

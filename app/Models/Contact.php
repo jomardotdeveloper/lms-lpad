@@ -38,11 +38,23 @@ class Contact extends Model
       return $this->belongsTo(Department::class);
     }
 
+    public function teacherClassrooms()
+    {
+      return $this->hasMany(Classroom::class, 'teacher_id');
+    }
+
+    public function classrooms()
+    {
+      return $this->belongsToMany(Classroom::class, 'classroom_students', 'student_id', 'classroom_id');
+    }
+
+
 
     public function getFullNameAttribute()
     {
       return "{$this->first_name} {$this->last_name}";
     }
+
 
     public function getTwoLettersAttribute()
     {
@@ -63,4 +75,5 @@ class Contact extends Model
     {
       return $query->where('is_admin', true);
     }
+
 }

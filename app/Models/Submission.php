@@ -12,9 +12,15 @@ class Submission extends Model
     protected $fillable = [
         'user_id',
         'exam_id',
+        'item_id',
         'response',
         'is_correct',
     ];
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
 
     public function user()
     {

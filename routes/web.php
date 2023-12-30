@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
@@ -10,6 +11,8 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\TopicController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +36,13 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [LoginController::class, 'register'])->name('register');
 Route::post('/register', [LoginController::class, 'registerStore'])->name('login.register');
 
+Route::get('/verify' , function () {
+    // return json
+    return [
+        'data' => true
+    ];
+});
+
 // Route::get('/', 'App\Http\Controllers\PusherController@index')->name('pusher');
 // Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast')->name('broadcast');
 // Route::post('/receive', 'App\Http\Controllers\PusherController@receive')->name('receive');
@@ -47,6 +57,13 @@ Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::resource('contacts', ContactController::class);
     Route::resource('subjects', SubjectController::class);
     Route::resource('events', EventController::class);
+    Route::resource('classrooms', ClassroomController::class);
+    Route::resource('topics', TopicController::class);
+    Route::resource('tests', TestController::class);
+    Route::post('tests/submit', [TestController::class, 'submit'])->name('tests.submit');
+
+    Route::post('classrooms/enroll', [ClassroomController::class, 'enroll'])->name('classrooms.enroll');
+    Route::post('classrooms/compute-grades', [ClassroomController::class, 'computeGrades'])->name('classrooms.compute-grades');
 
     Route::post('/subjects/{subject}/add-student', [SubjectController::class, 'addStudent'])->name('subjects.add-student');
     Route::post('/subjects/{subject}/add-topic', [SubjectController::class, 'addSubjectTopic'])->name('subjects.add-topic');

@@ -139,7 +139,7 @@
                                             <input type="password" class="form-control form-control-lg" id="password" placeholder="Enter your password" required name="password_confirmation">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <div class="form-label-group">
                                             <label class="form-label" for="default-01">Class</label>
                                         </div>
@@ -150,7 +150,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group">
                                         <div class="form-label-group">
                                             <label class="form-label" for="default-01">Profile Picture</label>
@@ -257,7 +257,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <button class="btn btn-lg btn-primary btn-block">Sign in</button>
+                                        <button class="btn btn-lg btn-primary btn-block">Register</button>
                                     </div>
                                     @endif
 
